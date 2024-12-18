@@ -79,7 +79,7 @@ const Register = () => {
 
   return (
     <div className="register-container">
-      {user && <Navigate to="/home" state={user} replace={true} />}
+      {user && <Navigate to="/EventsList" state={user} replace={true} />}
         <h1>Register</h1>
         <form onSubmit={handleRegister}>
             <div className="register-form-fields">

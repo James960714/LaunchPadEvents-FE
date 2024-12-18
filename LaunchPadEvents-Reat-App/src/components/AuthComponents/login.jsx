@@ -20,11 +20,6 @@ const LogIn = () => {
             setIsSigningIn(true);
             try{
                 await signIn(email, password)
-                const currentUser = await getUserByUserName(auth.currentUser.displayName)
-                setUser(currentUser.data.user)
-                console.log(user)
-                console.log(auth, 'success')
-                console.log(currentUser, 'currentUser')
             }catch (err){
                 setError(err)
                 console.log(err, 'fail')
@@ -37,7 +32,7 @@ const LogIn = () => {
 
     return (
         <div className="login-container">
-            {user && <Navigate to="/home" state={user} replace={true} />}
+            {user && <Navigate to="/events" state={user} replace={true} />}
             <h1>Log In</h1>
             <form onSubmit={handleSubmit}>
                 <div className="login-form-fields">
