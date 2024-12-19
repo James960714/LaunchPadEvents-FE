@@ -4,7 +4,7 @@ import { createUser } from "../../firebase/auth";
 import { getAllUsers, postNewUser } from '../../../api';
 import axios from "axios";
 import { AuthContext } from '../../contexts/authContext/index';
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 
 const Register = () => {
@@ -20,8 +20,10 @@ const Register = () => {
   const [passwordError, setPasswordError] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [isRegistering, setIsRegistering] = useState(false);
-
+  
+  const navigate = useNavigate()
   const { user, setUser } = useContext(AuthContext); 
+
 
   const handleRegister = async (e) => {
     e.preventDefault()
@@ -60,15 +62,12 @@ const Register = () => {
         try {
           const userCredential = await createUser(email, password);
           const updateUserProfile = await updateProfile(userCredential.user, { displayName: userName });
-          console.log(updateUserProfile, 'updateProfile')
           const postedUser = await postNewUser(firstName, lastName, userName, dob)
-          console.log(postedUser, 'postedUser')
-          console.log('User created successfully!');
+          navigate('/events')
           
         } catch (error) {
           console.log('error')
           setIsRegistering(false)
-          console.log(error.message);
         }
       } catch (error) {
         setIsRegistering(false)
@@ -79,7 +78,6 @@ const Register = () => {
 
   return (
     <div className="register-container">
-      {user && <Navigate to="/EventsList" state={user} replace={true} />}
         <h1>Register</h1>
         <form onSubmit={handleRegister}>
             <div className="register-form-fields">
@@ -106,7 +104,6 @@ const Register = () => {
             </div>
             <div className="register-form-fields">
                 <label>E-Mail Address:
-
                 <input
                 type="email"
                 id="email"

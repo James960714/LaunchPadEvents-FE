@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
     const [firebaseUser, setFirebaseUser] = useState(null);
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [staffHeadUser, setStaffHeadUser] = useState(false)
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
@@ -21,6 +22,9 @@ export const AuthProvider = ({ children }) => {
                 try{
                     const dbUser = await getUserByUserName(firebaseUser.displayName)
                     setUser(dbUser.data.user)
+                    if(dbUser.data.user.userType === 'Staff' || dbUser.data.user.userType === 'Head'){
+                        await setStaffHeadUser(true)
+                    }
                 }catch(err){
                     console.log(err)
                     setUser(null)
@@ -39,7 +43,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ user, setUser, firebaseUser, setFirebaseUser }}>
+        <AuthContext.Provider value={{ user, setUser, firebaseUser, setFirebaseUser, staffHeadUser, setStaffHeadUser }}>
             {children}
         </AuthContext.Provider>
     );

@@ -21,6 +21,7 @@ export const getUserByUserName = async (userName) => {
     }
 } 
 export const postNewUser = async (firstName, lastName, userName, dob) => {
+
     const newUser = await launchPadEventsApi.post('/users/user', {
         userName: userName,
         firstName: firstName,
@@ -47,6 +48,41 @@ export const postAttendee = async (eventId, userName) => {
     try{
         const addAttendee = await launchPadEventsApi.post(`/events/${eventId}/attendees`, {user: userName})
         return addAttendee
+    }catch(err){
+        console.log(err)
+    }
+}
+
+export const postEvent = async (name, startTime, endTime, location, info) => {
+        const createNewEvent = await launchPadEventsApi.post('/events/event', {
+            name: name,
+            startDateTime: startTime,
+            endDateTime: endTime,
+            location: location,
+            info: info
+        })
+        return createNewEvent.data.event
+}
+
+export const deleteEvent = async (eventId) => {
+        await launchPadEventsApi.delete(`/events/${eventId}`)
+}
+
+export const googleCalendarAuth = async () => {
+    const url = 'https://launchpadeventsplatform.onrender.com/google-calendar/auth'
+    window.location.href = url
+}
+
+export const createCalendarEvent = async (summary, description, startDateTime, endDateTime) => {
+    
+    try{
+        const createdEvent = await launchPadEventsApi.post('/google-calendar/create-event', {
+            summary: summary,
+            description:description,
+            startDateTime:startDateTime,
+            endDateTime:endDateTime
+        })
+        return createdEvent
     }catch(err){
         console.log(err)
     }

@@ -6,7 +6,7 @@ const Header = () => {
 
     const [isSigningOut, setIsSigningOut] = useState(false)
     const [error, setError] = useState(null)
-    const {setUser, setFirebaseUser} = useContext(AuthContext)
+    const {setUser, setFirebaseUser, setStaffHeadUser} = useContext(AuthContext)
     const navigate = useNavigate()
 
     const handleSignOut = async () => {
@@ -14,6 +14,7 @@ const Header = () => {
                 await signOut()
                 setUser(null)
                 setFirebaseUser(null)
+                setStaffHeadUser(false)
                 navigate("/login")
             }catch (err){
                 console.log(err, 'fail')

@@ -8,10 +8,9 @@ import { signOut } from "firebase/auth"
 
 const EventsList = () => {
     
-    const {user} = useContext(AuthContext)
-
+    const {user, staffHeadUser} = useContext(AuthContext)
     const [events, setEvents] = useState([])
-
+    
     const handleDate = (dateString) => {
         const date = new Date(dateString)
         const monthDate =  date.toLocaleString('en-GB', {month: 'short', day: 'numeric'})
@@ -30,8 +29,11 @@ const EventsList = () => {
 
     return (
     <div className="events-list-page">
-            {!user && <Navigate to="/login" state={user} replace={true} />}
+    <div className="events-list-subheader">
     <h2>Events</h2>
+    {staffHeadUser && 
+        <button type='button'><Link to='/events/create-event'>Create Event</Link></button>}
+    </div>
         <div className="events-list-container">
             <ul>
                 {events.map((event) => {
