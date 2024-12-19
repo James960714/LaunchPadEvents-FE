@@ -3,21 +3,25 @@ import LogIn from './components/AuthComponents/login'
 import Register from './components/AuthComponents/register'
 import EventsList from './components/EventsList'
 import EventPage from './components/EventPage'
-import Home from './components/EventsList'
-import { AuthContext } from './contexts/authContext/index'
-import {Routes, Route, Navigate} from 'react-router-dom'
+import Header from './components/Header'
+import {Routes, Route, Navigate, useLocation} from 'react-router-dom'
 import { useContext } from 'react'
+import { AuthContext } from './contexts/authContext'
 
-//const {user} = useContext(AuthContext)
 
 function App() {
+
+  const location = useLocation() 
+  const {firebaseUser} = useContext(AuthContext)
+  const noHeader = location.pathname === "/login" || location.pathname === ("/register")
   return (
   <div className='App-router'>
-    <h1>Events Platform</h1>
+    {!firebaseUser && <Navigate to='/login'/>}
+    {!noHeader && <Header/>}
   <Routes>
     <Route path="/login" element={<LogIn/>}/>
     <Route path="/register"element={<Register/>}/>
-    
+
     <Route path="/events"element={<EventsList/>}/>
     <Route path="/events/:eventId"element={<EventPage/>}/>
     {/* <Route path="/profile"element={<Profile/>}/> */}

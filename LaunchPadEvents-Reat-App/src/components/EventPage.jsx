@@ -4,6 +4,7 @@ import { getEventById, postAttendee } from "../../api"
 import { Link, Navigate, useParams } from "react-router-dom"
 
 
+
 const EventPage = () => {
     
     const {eventId} = useParams()

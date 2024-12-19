@@ -2,6 +2,8 @@ import { useState, useContext, useEffect } from "react"
 import { AuthContext } from "../contexts/authContext"
 import { getEvents } from "../../api"
 import { Link, Navigate } from "react-router-dom"
+import Header from "./Header"
+import { signOut } from "firebase/auth"
 
 
 const EventsList = () => {
