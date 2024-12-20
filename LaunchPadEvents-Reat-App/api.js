@@ -1,7 +1,11 @@
 import axios from 'axios';
 
 const launchPadEventsApi = axios.create({
-    baseURL: 'https://launchpadeventsplatform.onrender.com'
+    baseURL: 'https://launchpadeventsplatform.onrender.com',
+    withCredentials: true,
+    headers: {
+        "Content-Type": "application/json",
+    }
 })
 
 export const getAllUsers = async () => {
@@ -68,20 +72,26 @@ export const deleteEvent = async (eventId) => {
         await launchPadEventsApi.delete(`/events/${eventId}`)
 }
 
-export const googleCalendarAuth = async () => {
-    const url = 'https://launchpadeventsplatform.onrender.com/google-calendar/auth'
+export const googleCalendarAuth = async (eventId) => {
+    console.log(eventId)
+    if(!eventId){
+        console.log('event id missing')
+    }
+    const url = `https://launchpadeventsplatform.onrender.com/google-calendar/auth?eventId=${eventId}`
     window.location.href = url
 }
 
-export const createCalendarEvent = async (summary, description, startDateTime, endDateTime) => {
-    
+export const createCalendarEvent = async (name, info, startTime, endTime) => {
     try{
-        const createdEvent = await launchPadEventsApi.post('/google-calendar/create-event', {
-            summary: summary,
-            description:description,
-            startDateTime:startDateTime,
-            endDateTime:endDateTime
-        })
+        const requestDetails = {
+            summary: name,
+            description:info,
+            startDateTime:startTime,
+            endDateTime:endTime
+        }
+        console.log(requestDetails)
+
+        const createdEvent = await launchPadEventsApi.post('/google-calendar/create-event', requestDetails)
         return createdEvent
     }catch(err){
         console.log(err)
