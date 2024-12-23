@@ -1,12 +1,12 @@
 import { AuthContext } from "../contexts/authContext"
 import { signOut } from "../firebase/auth"
 import { useContext, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 const Header = () => {
 
     const [isSigningOut, setIsSigningOut] = useState(false)
     const [error, setError] = useState(null)
-    const {setUser, setFirebaseUser, setStaffHeadUser} = useContext(AuthContext)
+    const {setUser, setFirebaseUser, setStaffHeadUser, user} = useContext(AuthContext)
     const navigate = useNavigate()
 
     const handleSignOut = async () => {
@@ -23,9 +23,14 @@ const Header = () => {
         
         
         return (
-            <>
-        <h1 className="header-title">Events Platform</h1>
-        <button type='button' onClick={handleSignOut}>sign out</button>
+        <>
+        <div id="header-div">
+            <h1 id="header-title">Events Platform</h1>
+            <button id="signout-button" type='button' onClick={handleSignOut}>sign out</button>
+        </div>
+        <div>
+        <Link to="/events"><button id='navButton' type="botton">Events</button></Link>
+        </div>
         </>
     )
 };

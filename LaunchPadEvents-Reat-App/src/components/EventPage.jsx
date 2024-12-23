@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from "react"
 import { AuthContext } from "../contexts/authContext"
 import { createCalendarEvent, deleteEvent, getEventById, googleCalendarAuth, postAttendee } from "../../api"
 import { useNavigate, useParams } from "react-router-dom"
-
+import { handleDate } from "./EventsList"
 
 
 const EventPage = () => {
@@ -70,7 +70,7 @@ const EventPage = () => {
                         formatDateTime(event.startDateTime),
                         formatDateTime(event.endDateTime)
                     )
-                    console.log('events created', createEvent)
+                    alert('This event has been added to your Google Calendar')
                     setCalendarEventSent(true)
                 }catch(err) {
                     console.log("didn't Work", err)
@@ -84,17 +84,17 @@ const EventPage = () => {
         
 
     return (
-        <div className="event-page-page">
-        <h2>Event Page</h2>
+        <div id="eventPage-page">
+        <h2 className="component-header">Event Page</h2>
         <div className="event-detail-container">
-            <ul>
-                <li>{event.name}</li>
-                <li>{event.info}</li>
-                <li>{event.startDateTime}</li>
-                <li>{event.endDateTime}</li>
-            </ul>
-            {staffHeadUser ? (<button type='submit' onClick={handleDeleteEvent}>DELETE EVENT</button>) : !isSignedUp ? (<button type='submit' onClick={handleSignUp}>Sign Up</button>) : (<button disabled={true}>You are signed up to this event</button>)}
-            {addToCalendar && <button type='button' onClick={handleCalendar}>Add To Calendar</button>}
+            <h3 id="eventPage-event-name">{event.name}</h3>
+            <p className="eventPage-dateTime">Date: {handleDate(event.startDateTime)[1]} {handleDate(event.startDateTime)[0]}</p>
+            <p className="eventPage-dateTime">Time: {handleDate(event.startDateTime)[2]} - {handleDate(event.endDateTime)[2]}</p>     
+            <p id="eventPage-event-info">{event.info}</p>
+        </div>
+        <div id="eventPage-buttons">
+            {staffHeadUser ? (<button className="cud-button" type='submit' onClick={handleDeleteEvent}>DELETE EVENT</button>) : !isSignedUp ? (<button id="signed-up-note" type='submit' onClick={handleSignUp}>Sign Up</button>) : (<button disabled={true}>You are signed up to this event</button>)}
+            {addToCalendar && <button className="cud-button" type='button' onClick={handleCalendar}>Add To Calendar</button>}
         </div>
 
     </div>

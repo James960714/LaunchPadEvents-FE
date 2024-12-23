@@ -1,37 +1,123 @@
+html, body {
+  margin:0;
+  padding:0;
+  max-width: 1920px;
+  width:100%;
+  height:100%;
+  box-sizing: border-box;
+  background-color:aqua;
+}
+
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
+  background-color:aqua;
+  max-width: 1920px;
+  width:100%;
+  margin: auto 16px;
   padding: 2rem;
   text-align: center;
   color: black;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.App-router {
+  background-color:aqua;
+  width:100%;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#header-div{
+  display: grid;
+  margin-bottom: 6px;
+  grid-template-rows: 30% 70%;
+  grid-template-columns: 80% 20%;
+  grid-template-areas: '. signout-button' 'header-title header-title';
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+#header-title{
+  grid-area: header-title;
+  margin-bottom: 0;
+  text-align: left;
+  
+}
+#signout-button{
+  grid-area: signout-button;
+}
+
+.component-header {
+  background-color: aliceblue;
+  margin: 0;
+  margin: 6px 0 6px 0;
+  padding: 6px 0 6px 0;
+}
+
+#events-list-container {
+  background-color:aqua;
+  padding-left: 0%;
+}
+#eventList-list{
+  padding: 0
+}
+
+#eventList-event-cards {
+  list-style-type: none;
+  background-color: antiquewhite; 
+}
+
+#eventCard-link {
+  color: black;
+}
+
+#event-card{
+  padding: 6px 0px 6px 18px;
+  list-style-type: none;
+  border-style:groove;
+  display:grid;
+  grid-template-rows: 70% 30%;
+  grid-template-columns: 70% 30%;
+  grid-template-areas: "eventCard-eventName eventCard-eventDateDay" "eventCard-eventLocation eventCard-eventDateMonth";
+}
+
+#eventCard-eventName {
+  grid-area: eventCard-eventName;
+  text-align: left;
+  font-size: larger;
+}
+#eventCard-eventDateDay {
+  grid-area: eventCard-eventDateDay;
+  text-align: center;
+  margin-block-start: 1.33em;
+  margin-block-end: 1.33em
+}
+
+#eventCard-eventDateMonth {
+  grid-area: eventCard-eventDateMonth;
+  text-align: center;
+}
+/* #eventCard-eventDateStart {
+
+} */
+#eventCard-eventLocation {
+  grid-area: eventCard-eventLocation;
+  text-align: left;
+}
+
+.event-detail-container {
+  padding: 6px 0px 6px 18px;
+  background-color: aliceblue;
+}
+.eventPage-dateTime {
+  list-style-type: none;
+  text-align: left;
+  padding-left: 0
+}
+
+#eventPage-event-name {
+  text-align: left;
+}
+#eventPage-event-info {
+  text-align: left;
+}
+
+#eventPage-buttons {
+  margin-top: 18px;
 }
 
 .card {

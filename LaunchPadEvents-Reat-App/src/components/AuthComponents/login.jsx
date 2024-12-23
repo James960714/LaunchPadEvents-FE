@@ -21,8 +21,10 @@ const LogIn = () => {
             try{
                 await signIn(email, password)
             }catch (err){
-                setError(err)
-                console.log(err, 'fail')
+                setError("Invalid email or password! Please check and try again")
+                setPassword("")
+                setEmail("")
+                
             } finally {
                 setIsSigningIn(false);
             }

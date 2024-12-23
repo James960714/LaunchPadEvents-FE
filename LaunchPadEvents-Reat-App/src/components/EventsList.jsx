@@ -6,18 +6,18 @@ import Header from "./Header"
 import { signOut } from "firebase/auth"
 
 
+export const handleDate = (dateString) => {
+    const date = new Date(dateString)
+    const monthDate =  date.toLocaleString('en-GB', {month: 'short', day: 'numeric'})
+    const day =  date.toLocaleString('en-GB', {weekday: 'short'})
+    const time =  date.toLocaleString('en-GB', {hour: 'numeric', minute: 'numeric'})
+    return [monthDate, day, time]
+}
 const EventsList = () => {
     
     const {user, staffHeadUser} = useContext(AuthContext)
     const [events, setEvents] = useState([])
     
-    const handleDate = (dateString) => {
-        const date = new Date(dateString)
-        const monthDate =  date.toLocaleString('en-GB', {month: 'short', day: 'numeric'})
-        const day =  date.toLocaleString('en-GB', {weekday: 'short'})
-        const startTime =  date.toLocaleString('en-GB', {hour: 'numeric', minute: 'numeric'})
-        return [monthDate, day, startTime]
-    }
     useEffect(() => {
             async function fetchEvents() {
                 const fetchedEvents = await getEvents()
@@ -29,23 +29,24 @@ const EventsList = () => {
 
     return (
     <div className="events-list-page">
-    <div className="events-list-subheader">
-    <h2>Events</h2>
+    <h2 className="component-header">Events</h2>
     {staffHeadUser && 
-        <button type='button'><Link to='/events/create-event'>Create Event</Link></button>}
-    </div>
-        <div className="events-list-container">
-            <ul>
+        <button id="cud-button" type='button'><Link to='/events/create-event'>Create Event</Link>
+        </button>}
+        <div id="events-list-container">
+            <ul id="eventList-list">
                 {events.map((event) => {
-                    return <ul key={event._id} id='events-list-cards'>
-                        <Link to={`/events/${event._id}`}>
-                        <h4>{event.name}</h4>
-                        <li>{handleDate(event.startDateTime)[0]}</li>
-                        <li>{handleDate(event.startDateTime)[1]}</li>
-                        <li>{handleDate(event.startDateTime)[2]}</li>
-                        <li>{event.location}</li>
+                    return <li key={event._id}id="eventList-event-cards">
+                        <Link id="eventCard-link" to={`/events/${event._id}`}>
+                            <ul id="event-card" key={event._id}>
+                                <h4 id="eventCard-eventName">{event.name}</h4>
+                                <li id="eventCard-eventDateDay">{handleDate(event.startDateTime)[1]}</li>
+                                <li id="eventCard-eventDateMonth">{handleDate(event.startDateTime)[0]}</li>
+                                {/* <li id="eventCard-eventDateStart">{handleDate(event.startDateTime)[2]}</li> */}
+                                <li id="eventCard-eventLocation">{event.location}</li>
+                            </ul>
                         </Link>
-                    </ul>
+                    </li>
                 })}    
             </ul>    
         </div>
