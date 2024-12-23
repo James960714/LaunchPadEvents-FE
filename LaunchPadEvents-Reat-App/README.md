@@ -2,6 +2,8 @@
 
 This is the frontend for the Launchpad Events Platform, a web application designed to facilitate event management and user interaction. The app is built using React and leverages Firebase for user authentication. It also integrates with a custom backend and Google Calendar API for extended functionality.
 
+To see this live: https://selectevents.netlify.app/events 
+
 # Features
 
 General Users
