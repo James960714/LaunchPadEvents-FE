@@ -26,7 +26,7 @@ const CreateEventPage = () => {
 
     return (
         <div className="create-event-container">
-        <h2>Create New Event</h2>
+        <h2 className="component-header">Create New Event</h2>
             <form className="create-event-form" onSubmit={handleEventCreation}>
                 <div className="create-event-form-fields">
                     <label htmlFor="event-name">Event name:</label>
