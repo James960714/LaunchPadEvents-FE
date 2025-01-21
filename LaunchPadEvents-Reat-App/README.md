@@ -11,7 +11,7 @@ Head Account:
 email: admintest@admin.com 
 password: testp1
 
-StaffAccount:
+Staff Account:
 email: teststaff1@admin.com 
 password: testp1
 
