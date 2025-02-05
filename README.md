@@ -23,7 +23,7 @@ Test Accounts:
 
 For a test user account you can also use the create account functionality on the website.
 
-To see this live: https://selectevents.netlify.app/events 
+To see this live: https://selectevents.netlify.app 
 
 # Features
 
