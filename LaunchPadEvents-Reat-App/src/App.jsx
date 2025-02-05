@@ -8,6 +8,7 @@ import CreateEventPage from './components/CreateEventPage'
 import {Routes, Route, Navigate, useLocation} from 'react-router-dom'
 import { useContext } from 'react'
 import { AuthContext } from './contexts/authContext'
+import PrivacyPolicy from './components/PrivacyPolicy'
 
 
 function App() {
@@ -16,9 +17,11 @@ function App() {
   const {firebaseUser, user} = useContext(AuthContext)
   const noHeader = location.pathname === "/login" || location.pathname === ("/register")
 
+  const isPublicRoute = location.pathname === "/privacy-policy"
+
   return (
   <div className='App-router'>
-    {/* {!firebaseUser && <Navigate to='/login'/>} */}
+    {!user && !isPublicRoute && <Navigate to='/login'/>}
     {!noHeader && <Header/>}
   <Routes>
     <Route path="/login" element={<LogIn/>}/>
@@ -26,7 +29,7 @@ function App() {
     <Route path="/events"element={<EventsList/>}/>
     <Route path="/events/:eventId"element={<EventPage/>}/>
     <Route path="/events/create-event"element={<CreateEventPage/>}/>
-    {/* <Route path="/profile"element={<Profile/>}/> */}
+    <Route path="/privacy-policy"element={<PrivacyPolicy/>}/>
     <Route path="*" element={<Navigate to="/login"/>}/>
   </Routes>
   </div>
