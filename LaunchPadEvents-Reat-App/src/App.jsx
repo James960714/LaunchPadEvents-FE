@@ -21,7 +21,7 @@ function App() {
 
   return (
   <div className='App-router'>
-    {!user && !isPublicRoute && <Navigate to='/login'/>}
+    {/* {!user && !isPublicRoute && <Navigate to='/login'/>} */}
     {!noHeader && <Header/>}
   <Routes>
     <Route path="/login" element={<LogIn/>}/>
@@ -30,7 +30,7 @@ function App() {
     <Route path="/events/:eventId"element={<EventPage/>}/>
     <Route path="/events/create-event"element={<CreateEventPage/>}/>
     <Route path="/privacy-policy"element={<PrivacyPolicy/>}/>
-    <Route path="*" element={<Navigate to="/login"/>}/>
+    <Route path="*" element={<Navigate to="/events"/>}/>
   </Routes>
   </div>
   )

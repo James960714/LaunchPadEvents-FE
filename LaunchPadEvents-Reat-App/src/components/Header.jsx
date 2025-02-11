@@ -15,7 +15,7 @@ const Header = () => {
                 setUser(null)
                 setFirebaseUser(null)
                 setStaffHeadUser(false)
-                navigate("/login")
+                navigate("/events")
             }catch (err){
                 console.log(err, 'fail')
             } 
@@ -25,11 +25,17 @@ const Header = () => {
         return (
         <>
         <div id="header-div">
-            <h1 id="header-title">Events Platform</h1>
-            <button id="signout-button" type='button' onClick={handleSignOut}>sign out</button>
+            <h1 id="header-title">Select Events</h1>
+            {user ? (<button id="signout-button" type='button' onClick={handleSignOut}>sign out</button>) : (<button id="signout-button" type="button"><Link to="/login">sign in</Link></button>)}
         </div>
         <div>
-        <Link to="/events"><button id='navButton' type="botton">Events</button></Link>
+            <p id="website-info">
+                Welcome to Select Events. Browse upcoming events, sign up to them and add them to your google calendar 
+            </p>
+        </div>
+        <div>
+            <Link to="/events"><button id='navButton' type="button">Events</button></Link>
+            <Link to="/privacy-policy"><button id='navButton' type="button">Privacy Policy</button></Link>
         </div>
         </>
     )
