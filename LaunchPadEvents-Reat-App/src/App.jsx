@@ -21,7 +21,6 @@ function App() {
 
   return (
   <div className='App-router'>
-    {/* {!user && !isPublicRoute && <Navigate to='/login'/>} */}
     {!noHeader && <Header/>}
   <Routes>
     <Route path="/login" element={<LogIn/>}/>
