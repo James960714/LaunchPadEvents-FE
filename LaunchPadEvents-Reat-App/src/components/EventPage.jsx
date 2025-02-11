@@ -36,8 +36,8 @@ const EventPage = () => {
         }catch(err){
             console.log(err)
         }
-
     }
+    
     const handleDeleteEvent = async() => {
         await deleteEvent(event._id)
         .then(() => {
@@ -49,38 +49,42 @@ const EventPage = () => {
                 const fetchedEventById = await getEventById(eventId)
                 const attendees = fetchedEventById.attendees
                 setEvent(fetchedEventById) 
-                if(attendees.includes(user.userName)){
+                if(user && attendees.includes(user.userName)){
                     setIsSignedUp(true)
                 }
             } 
             fetchEventById()
-    }, [eventId, user.userName])
+    }, [])
 
     useEffect(() => {
+        if (!event || !event.name) return;
+    
         const sendEventToCalendar = async () => {
-            const urlParams = new URLSearchParams(window.location.search)
-            const authSuccess = urlParams.get('authSuccess')
-            const eventIdFromUrl = urlParams.get('eventId')
-        
-            if (authSuccess==='true' && !calendarEventSent){
-                try{
+            const urlParams = new URLSearchParams(window.location.search);
+            const authSuccess = urlParams.get('authSuccess');
+            const eventIdFromUrl = urlParams.get('eventId');
+    
+            if (authSuccess === 'true' && !calendarEventSent) {
+                try {
                     const createEvent = await createCalendarEvent(
                         event.name,
                         event.info, 
                         formatDateTime(event.startDateTime),
                         formatDateTime(event.endDateTime)
-                    )
-                    alert('This event has been added to your Google Calendar')
-                    setCalendarEventSent(true)
-                }catch(err) {
-                    console.log("didn't Work", err)
+                    );
+                    navigate(`/events/${eventId}`);
+                    alert('This event has been added to your Google Calendar');
+                    setCalendarEventSent(true);
+                } catch (err) {
+                    console.log("didn't Work", err);
                 }
-            }else{
-                console.log('url params issue in frontend')
+            } else {
+                console.log('url params issue in frontend');
             }
-        } 
-        sendEventToCalendar()
-    },[event, calendarEventSent])
+        };
+    
+        sendEventToCalendar();
+    }, [event?.name, calendarEventSent]); 
         
 
     return (
@@ -93,10 +97,21 @@ const EventPage = () => {
             <p id="eventPage-event-info">{event.info}</p>
         </div>
         <div id="eventPage-buttons">
-            {staffHeadUser ? (<button className="cud-button" type='submit' onClick={handleDeleteEvent}>DELETE EVENT</button>) : !isSignedUp ? (<button id="signed-up-note" type='submit' onClick={handleSignUp}>Sign Up</button>) : (<button disabled={true}>You are signed up to this event</button>)}
-            {addToCalendar && <button className="cud-button" type='button' onClick={handleCalendar}>Add To Calendar</button>}
+            {user ? 
+            (staffHeadUser ? (<button className="cud-button" type='submit' onClick={handleDeleteEvent}>DELETE EVENT</button>) : !isSignedUp ? (<button id="signed-up-note" type='submit' onClick={handleSignUp}>Sign Up</button>) : (<button id="signed-up-note" disabled={true}>You are signed up to this event</button>)) : (<p><a href="/login">Login</a> to sign up to this event</p>)
+        }
+            {addToCalendar && <button className="google-calendar-button" type="button" onClick={handleCalendar}>
+    <img 
+        src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Calendar_icon_%282020%29.svg" 
+        alt="Google Calendar"
+        className="google-calendar-icon"
+        width="24"
+        height="24"
+    />
+    Add to Google Calendar
+</button>
+}
         </div>
-
     </div>
     )
 }

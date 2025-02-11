@@ -1,34 +1,41 @@
 import { useState, useContext, useEffect } from "react"
 import { AuthContext } from "../contexts/authContext"
 import { getEvents } from "../../api"
-import { Link, Navigate } from "react-router-dom"
-import Header from "./Header"
-import { signOut } from "firebase/auth"
+import { Link } from "react-router-dom"
+
 
 
 export const handleDate = (dateString) => {
-    const date = new Date(dateString)
-    const monthDate =  date.toLocaleString('en-GB', {month: 'short', day: 'numeric'})
-    const day =  date.toLocaleString('en-GB', {weekday: 'short'})
-    const time =  date.toLocaleString('en-GB', {hour: 'numeric', minute: 'numeric'})
-    return [monthDate, day, time]
-}
+    if (!dateString) return ["", "", ""]; 
+
+    const date = new Date(dateString);
+    const monthDate = date.toLocaleString('en-GB', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+    const day = date.toLocaleString('en-GB', { weekday: 'short', timeZone: 'UTC' });
+    const time = date.toISOString().split("T")[1].slice(0, 5); 
+    return [monthDate, day, time];
+};
+
 const EventsList = () => {
     
     const {user, staffHeadUser} = useContext(AuthContext)
     const [events, setEvents] = useState([])
     
     useEffect(() => {
-            async function fetchEvents() {
-                const fetchedEvents = await getEvents()
-                await setEvents(fetchedEvents) 
-                return fetchedEvents
-            } 
-            fetchEvents()
-    }, [])
+        const fetchEvents = async () => {
+            const fetchedEvents = await getEvents();
+            setEvents(fetchedEvents);
+        };
+        fetchEvents();
+    }, []);
 
     return (
+        
     <div className="events-list-page">
+                <div>
+            <p id="website-info">
+                Welcome to Select Events. Browse upcoming events, sign up to them and add them to your google calendar 
+            </p>
+        </div>
     <h2 className="component-header">Events</h2>
     {staffHeadUser && 
         <button id="cud-button" type='button'><Link to='/events/create-event'>Create Event</Link>
@@ -42,7 +49,6 @@ const EventsList = () => {
                                 <h4 id="eventCard-eventName">{event.name}</h4>
                                 <li id="eventCard-eventDateDay">{handleDate(event.startDateTime)[1]}</li>
                                 <li id="eventCard-eventDateMonth">{handleDate(event.startDateTime)[0]}</li>
-                                {/* <li id="eventCard-eventDateStart">{handleDate(event.startDateTime)[2]}</li> */}
                                 <li id="eventCard-eventLocation">{event.location}</li>
                             </ul>
                         </Link>

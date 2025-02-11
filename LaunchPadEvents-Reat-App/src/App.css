@@ -34,9 +34,19 @@ html, body {
 #header-title{
   grid-area: header-title;
   margin-bottom: 0;
-  text-align: left;
-  
+  text-align: left; 
 }
+
+#navButton {
+  margin-right: 8px;
+}
+
+#website-info {
+  background-color: white;
+  border-style: groove;
+  border-radius: 8px;
+}
+
 #signout-button{
   grid-area: signout-button;
 }
@@ -118,8 +128,32 @@ html, body {
 
 #eventPage-buttons {
   margin-top: 18px;
+  display: flex;
+}
+#signed-up-note{
+  margin-right: 8px
 }
 
+.google-calendar-button {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px solid #d1d1d1;
+  padding: 8px 12px;
+  font-size: 16px;
+  color: #5f6368;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.google-calendar-button:hover {
+  background-color: #f8f9fa;
+}
+
+.google-calendar-icon {
+  margin-right: 8px;
+}
 .card {
   padding: 2em;
 }
