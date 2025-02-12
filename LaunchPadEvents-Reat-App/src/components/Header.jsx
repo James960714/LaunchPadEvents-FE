@@ -23,7 +23,7 @@ const Header = () => {
         <>
         <div id="header-div">
             <h1 id="header-title">Select Events</h1>
-            {user ? (<button id="signout-button" type='button' onClick={handleSignOut}>sign out</button>) : (<button id="signout-button" type="button"><Link to="/login">sign in</Link></button>)}
+            {user ? (<button id="signout-button" type='button' onClick={handleSignOut}>Log out</button>) : (<Link to="/login" id="signout-button"><button id="signout-button" type="button">Log in</button></Link>)}
         </div>
         <div>
             <Link to="/events"><button id='navButton' type="button">Events</button></Link>

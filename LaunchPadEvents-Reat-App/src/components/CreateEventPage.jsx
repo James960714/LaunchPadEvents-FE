@@ -14,15 +14,25 @@ const CreateEventPage = () => {
     const navigate = useNavigate()
 
     const handleEventCreation = async (e) => {
-        e.preventDefault()
-       setButtonClicked(true)
-       try{
-           await postEvent(eventName,startTime, endTime, location, eventInfo)     
-            navigate('/events')
-        }catch(err){
-            console.log(err, 'error event creation')
+        e.preventDefault();
+        setButtonClicked(true);
+    
+        try {
+            const start = new Date(startTime);
+            const end = new Date(endTime);
+            
+            if (end <= start) {
+                console.log("End time cannot be before or equal to the start time");
+                alert("End time must be after the start time.");
+                setButtonClicked(false);
+                return;
+            }
+            await postEvent(eventName, startTime, endTime, location, eventInfo);
+            navigate('/events');
+        } catch (err) {
+            alert("This event already exists");
         }
-    }
+    };
 
     return (
         <div className="create-event-container">

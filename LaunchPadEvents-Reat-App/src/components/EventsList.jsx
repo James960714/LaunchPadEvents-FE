@@ -12,7 +12,7 @@ export const handleDate = (dateString) => {
     const monthDate = date.toLocaleString('en-GB', { month: 'short', day: 'numeric', timeZone: 'UTC' });
     const day = date.toLocaleString('en-GB', { weekday: 'short', timeZone: 'UTC' });
     const time = date.toISOString().split("T")[1].slice(0, 5); 
-    return [monthDate, day, time];
+    return [monthDate, day, time, date];
 };
 
 const EventsList = () => {
@@ -38,8 +38,8 @@ const EventsList = () => {
         </div>
     <h2 className="component-header">Events</h2>
     {staffHeadUser && 
-        <button id="cud-button" type='button'><Link to='/events/create-event'>Create Event</Link>
-        </button>}
+        <Link to='/events/create-event'><button id="cud-button" type='button'>Create Event
+        </button></Link>}
         <div id="events-list-container">
             <ul id="eventList-list">
                 {events.map((event) => {
