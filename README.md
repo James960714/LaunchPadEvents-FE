@@ -67,13 +67,13 @@ This project is a web application for; users to browse events, sign up to them a
 - RESTful API for event management.
 - Event creation, retrieval, and validation for duplicate events.
 - Middleware for authentication and error handling.
-- Integration with a database (e.g., MongoDB or PostgreSQL).
+- Integration with a database (MongoDB).
 
 
 # Tech Stack
 - Express.js: Backend framework for building APIs.
 - Node.js: JavaScript runtime environment.
-- Database: MongoDB, PostgreSQL, or similar (customize based on your setup).
+- Database: MongoDB.
 - Google Calendar: Google API for interacting with a user's Google calendar.
 
 
