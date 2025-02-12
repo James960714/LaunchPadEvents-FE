@@ -23,7 +23,14 @@ const EventsList = () => {
     useEffect(() => {
         const fetchEvents = async () => {
             const fetchedEvents = await getEvents();
-            setEvents(fetchedEvents);
+            const now = new Date();
+    
+            const upcomingEvents = fetchedEvents.filter(event => {
+                const eventDate = new Date(event.startDateTime);
+                return eventDate >= now;
+            });
+    
+            setEvents(upcomingEvents);
         };
         fetchEvents();
     }, []);
