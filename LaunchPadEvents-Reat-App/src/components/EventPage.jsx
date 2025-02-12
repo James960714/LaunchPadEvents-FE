@@ -12,6 +12,7 @@ const EventPage = () => {
     const [addToCalendar, setAddToCalendar] = useState(false)
     const [postEvent, setPostEvent] = useState(false)
     const [calendarEventSent, setCalendarEventSent] = useState(false)
+    const [isDeleted, setIsDeleted] = useState(false)
     const {eventId} = useParams()
     const {user, staffHeadUser} = useContext(AuthContext)
 
@@ -39,10 +40,13 @@ const EventPage = () => {
     }
     
     const handleDeleteEvent = async() => {
-        await deleteEvent(event._id)
-        .then(() => {
-            navigate('/events')
-        })
+        try{
+            await deleteEvent(event._id)
+        }
+        catch(err){
+            console.log(err)
+        }
+        return navigate('/events')
     }
     useEffect(() => {
             const fetchEventById = async () => {
@@ -92,7 +96,8 @@ const EventPage = () => {
         <h2 className="component-header">Event Page</h2>
         <div className="event-detail-container">
             <h3 id="eventPage-event-name">{event.name}</h3>
-            <p className="eventPage-dateTime">Date: {handleDate(event.startDateTime)[1]} {handleDate(event.startDateTime)[0]}</p>
+            {handleDate(event.startDateTime)[0] === handleDate(event.endDateTime)[0] ? 
+            (<p className="eventPage-dateTime">Date: {handleDate(event.startDateTime)[1]} {handleDate(event.startDateTime)[0]}</p>) : (<p className="eventPage-dateTime">Date: {handleDate(event.startDateTime)[1]} {handleDate(event.startDateTime)[0]} - {handleDate(event.endDateTime)[1]} {handleDate(event.endDateTime)[0]}</p>)}
             <p className="eventPage-dateTime">Time: {handleDate(event.startDateTime)[2]} - {handleDate(event.endDateTime)[2]}</p>     
             <p id="eventPage-event-info">{event.info}</p>
         </div>
@@ -101,16 +106,8 @@ const EventPage = () => {
             (staffHeadUser ? (<button className="cud-button" type='submit' onClick={handleDeleteEvent}>DELETE EVENT</button>) : !isSignedUp ? (<button id="signed-up-note" type='submit' onClick={handleSignUp}>Sign Up</button>) : (<button id="signed-up-note" disabled={true}>You are signed up to this event</button>)) : (<p><a href="/login">Login</a> to sign up to this event</p>)
         }
             {addToCalendar && <button className="google-calendar-button" type="button" onClick={handleCalendar}>
-    <img 
-        src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Calendar_icon_%282020%29.svg" 
-        alt="Google Calendar"
-        className="google-calendar-icon"
-        width="24"
-        height="24"
-    />
-    Add to Google Calendar
-</button>
-}
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Calendar_icon_%282020%29.svg" alt="Google Calendar" className="google-calendar-icon" width="24" height="24"/>Add to Google Calendar</button>
+        }
         </div>
     </div>
     )
